@@ -3,6 +3,9 @@ import json
 from django.shortcuts import render, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
+from django.core import serializers
+
+from .models import ServerAsset
 
 # Create your views here.
 @login_required(login_url="/admin/login/")
@@ -22,16 +25,10 @@ def overview(request):
 
 @csrf_exempt
 def page(request):
-    import random
-    tmp_list = list()
-    for _ in range(100):
-        tmp_dict = dict()
-        tmp_dict['a'] = 'a'
-        tmp_dict['b'] = 'b'
-        tmp_dict['c'] = random.randint(1,50)
-        tmp_dict['d'] = 'd'
-        tmp_dict['e'] = random.randint(1,50)
-        tmp_list .append(tmp_dict)
-    print(tmp_list)
-    return HttpResponse(json.dumps({"data":tmp_list}))
+    tmp_data = serializers.serialize('json', ServerAsset.objects.all())
+    result_json = json.loads(tmp_data)  # 对序列化之后的str类型数据进行转化为json对象
+    tmp = list()
+    for item in result_json:
+        tmp.append(item['fields'])  # 提取 'fields'字段的内容
+    return HttpResponse(json.dumps({"data": tmp}))
 

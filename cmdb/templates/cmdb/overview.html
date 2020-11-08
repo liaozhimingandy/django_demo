@@ -4,10 +4,10 @@
 
 {#内容导航条部分#}
 {% block content_header %}
-    资产总览
+    服务器总览
 {% endblock %}
 {% block content_header_2 %}
-    资产总览
+    服务器总览
 {% endblock %}
 
 <!--内容区域-->
@@ -23,11 +23,16 @@
                     <table id="example1" class="table table-bordered table-hover">
                         <thead>
                         <tr>
-                            <th>Rendering engine</th>
-                            <th>Browser</th>
-                            <th>Platform(s)</th>
-                            <th>Engine version</th>
-                            <th>CSS grade</th>
+                            <th>序列号</th>
+                            <th>服务器名称</th>
+                            <th>操作系统名称</th>
+                            <th>管理IP</th>
+                            <th>记录时间</th>
+                            <th>记录者</th>
+                            <th>更新者</th>
+                            <th>更新日期</th>
+                            <th>备注</th>
+                            <th>删除标记</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -39,20 +44,13 @@
                             <td>Win 95+</td>
                             <td> 4</td>
                             <td>X</td>
-                        </tr>
-                        <tr>
-                            <td>Gecko</td>
-                            <td>Firefox 1.0</td>
-                            <td>Win 98+ / OSX.2+</td>
-                            <td>1.7</td>
-                            <td>A</td>
-                        </tr>
-                        <tr>
-                            <td>Gecko</td>
-                            <td>Firefox 1.5</td>
-                            <td>Win 98+ / OSX.2+</td>
-                            <td>1.8</td>
-                            <td>A</td>
+                            <td>Trident</td>
+                            <td>Internet
+                                Explorer 4.0
+                            </td>
+                            <td>Win 95+</td>
+                            <td> 4</td>
+                            <td>X</td>
                         </tr>
                         </tbody>
                     </table>
@@ -95,15 +93,24 @@
                         },
                         // 设置列的数据源
                         "columns": [
-                            {"data": "a"},
-                            {"data": "b"},
+                            {"data": "sn"},
+                            {"data": "name"},
                             {
-                                "data": 'c'
+                                "data": 'os_name'
                             },
                             {
-                                "data": "d"
+                                "data": "manage_ip"
                             },
-                            {"data": "e"}
+                            {"data": "create_time"},
+                             {"data": "creator"},
+                            {"data": "updator"},
+                            {
+                                "data": 'update_time'
+                            },
+                            {
+                                "data": "memo"
+                            },
+                            {"data": "flag_delted"}
                         ],
 
                         // 国际化
