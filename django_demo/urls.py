@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.contrib.auth import views as auth_views
 
 
 urlpatterns = [
@@ -22,5 +23,9 @@ urlpatterns = [
     path(r'api_auth/', include('quickstart.urls')),
     path(r'api_auth/', include('rest_framework.urls', namespace='rest_framework')),
     path(r'students/', include('students.urls')),
-
+    path(r'cmdb/', include("cmdb.urls")),
+    # url(r'accounts/login/$', 'django.contrib.auth.login'),
+    # path('accounts/', include('django.contrib.auth.urls')),
+    # path('change-password/', auth_views.PasswordChangeView.as_view()),
+    # path('login/', auth_views.LoginView.as_view()),
 ]
