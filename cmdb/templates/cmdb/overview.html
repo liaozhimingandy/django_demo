@@ -1,13 +1,13 @@
 {% extends 'cmdb/base.html' %}
 {#标题#}
-{% block page_title %} 资产总览{% endblock %}
+{% block page_title %} 服务器清单{% endblock %}
 
 {#内容导航条部分#}
 {% block content_header %}
-    服务器总览
+    服务器清单
 {% endblock %}
 {% block content_header_2 %}
-    服务器总览
+    服务器清单
 {% endblock %}
 
 <!--内容区域-->
@@ -64,108 +64,137 @@
     <script type="text/javascript">
         $(document).ready(function () {
             $(function () {
-                    $("#example1").DataTable({
-                        "responsive": true,
-                        "autoWidth": true,
-                        // 是否开启本地分页
-                        "paging": true,
-                        // 是否开启本地排序
-                        "ordering": true,
-                        // 是否显示左下角信息
-                        "info": true,
-                        // 是否允许用户改变表格每页显示的记录数
-                        "lengthChange": true,
-                        // 是否显示处理状态(排序的时候，数据很多耗费时间长的话，也会显示这个)
-                        "processing": true,
-                        // 是否允许 DataTables 开启本地搜索
-                        "searching": true,
-                        // 是否开启服务器模式;如果是服务器请求数据,则下面设置为true
-                        "serverSide": false,
-                        // 控制 DataTables 的延迟渲染，可以提高初始化的速度
-                        "deferRender": true,
-                        // 分页按钮显示选项
-                        "pagingType": "full_numbers",
-                        // 增加或修改通过 Ajax 提交到服务端的请求数据
-                        "ajax": {
-                            "url": "/cmdb/page",
-                            "type": "POST",
-                            "dataSrc": 'data'
+                $("#example1").DataTable({
+                    "responsive": true,
+                    "autoWidth": false,
+                    // 是否开启本地分页
+                    "paging": true,
+                    // 是否开启本地排序
+                    "ordering": true,
+                    // 是否显示左下角信息
+                    "info": true,
+                    // 是否允许用户改变表格每页显示的记录数
+                    "lengthChange": true,
+                    // 是否显示处理状态(排序的时候，数据很多耗费时间长的话，也会显示这个)
+                    "processing": true,
+                    // 是否允许 DataTables 开启本地搜索
+                    "searching": true,
+                    // 是否开启服务器模式;如果是服务器请求数据,则下面设置为true
+                    "serverSide": false,
+                    // 控制 DataTables 的延迟渲染，可以提高初始化的速度
+                    "deferRender": true,
+                    // 分页按钮显示选项
+                    "pagingType": "full_numbers",
+                    // 增加或修改通过 Ajax 提交到服务端的请求数据
+                    "ajax": {
+                        "url": "/cmdb/page",
+                        "type": "POST",
+                        "dataSrc": 'data'
+                    },
+                    // 设置列的数据源
+                    "columns": [
+                        {"data": "sn"},
+                        {"data": "name"},
+                        {
+                            "data": 'os_type',
+                             "render": function (data, type, row, meta) {
+                                //这个效果是超过的 隐藏，类似效果自己扩展吧
+                                 if(data=='W'){
+                                     return '<i class="fas fa-th-large"></i>'
+                                 }else if(data=='A'){
+                                     return '<i class="fa fa-apple-alt" aria-hidden="true"></i>'
+                                 }else{
+                                     return '未知'
+                                 }
+
+                            }
                         },
-                        // 设置列的数据源
-                        "columns": [
-                            {"data": "sn"},
-                            {"data": "name"},
-                            {
-                                "data": 'os_name'
-                            },
-                            {
-                                "data": "manage_ip"
-                            },
-                            {"data": "create_time"},
-                             {"data": "creator"},
-                            {"data": "updator"},
-                            {
-                                "data": 'update_time'
-                            },
-                            {
-                                "data": "memo"
-                            },
-                            {"data": "flag_delted"}
-                        ],
+                        {
+                            "data": "manage_ip"
+                        },
+                        {
+                            "data": "create_time",
+                            "render": function (data, type, row, meta) {
+                                //这个效果是超过的 隐藏，类似效果自己扩展吧
+                                return "<div style='width:150px;text-align:left;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;'" + "title='" + data + "'>" + data + "</div>";
+                            }
+                        },
 
-                        // 国际化
-                        "language":
-                            {
-                                "sProcessing":
-                                    "处理中...",
-                                "sLengthMenu":
-                                    "显示 _MENU_ 项结果",
-                                "sZeroRecords":
-                                    "没有匹配结果",
-                                "sInfo":
-                                    "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
-                                "sInfoEmpty":
-                                    "显示第 0 至 0 项结果，共 0 项",
-                                "sInfoFiltered":
-                                    "(由 _MAX_ 项结果过滤)",
-                                "sInfoPostFix":
-                                    "",
-                                "sSearch":
-                                    "搜索:",
-                                "sUrl":
-                                    "",
-                                "sEmptyTable":
-                                    "表中数据为空",
-                                "sLoadingRecords":
-                                    "载入中...",
-                                "sInfoThousands":
-                                    ",",
-                                "oPaginate":
-                                    {
-                                        "sFirst":
-                                            "首页",
-                                        "sPrevious":
-                                            "上页",
-                                        "sNext":
-                                            "下页",
-                                        "sLast":
-                                            "末页"
-                                    }
-                                ,
-                                "oAria":
-                                    {
-                                        "sSortAscending":
-                                            ": 以升序排列此列",
-                                        "sSortDescending":
-                                            ": 以降序排列此列"
-                                    }
-                            },
+                        {"data": "creator"},
+                        {"data": "updator"},
+                        {
+                            "data": 'update_time',
+                            "render": function (data, type, row, meta) {
+                                //这个效果是超过的 隐藏，类似效果自己扩展吧white-space: nowrap;为不换行多的用...代替
+                                return "<div style='width:150px;text-align:left;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;'" + "title='" + data + "'>" + data + "</div>";
+                            }
+                        },
+                        {
+                            "data": "memo"
+                        },
+                        {
+                            "data": "flag_delted",
+                            "render": function (obj) {
+                                if (obj == false) {
+                                    return "<span class='text-success'>正常</span>"
+                                } else {
+                                    return "<span class='text-danger'>已删除</span>"
+                                }
+                            }
+                        }
+                    ],
+                    // 国际化
+                    "language":
+                        {
+                            "sProcessing":
+                                "处理中...",
+                            "sLengthMenu":
+                                "显示 _MENU_ 项结果",
+                            "sZeroRecords":
+                                "没有匹配结果",
+                            "sInfo":
+                                "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+                            "sInfoEmpty":
+                                "显示第 0 至 0 项结果，共 0 项",
+                            "sInfoFiltered":
+                                "(由 _MAX_ 项结果过滤)",
+                            "sInfoPostFix":
+                                "",
+                            "sSearch":
+                                "搜索:",
+                            "sUrl":
+                                "",
+                            "sEmptyTable":
+                                "表中数据为空",
+                            "sLoadingRecords":
+                                "载入中...",
+                            "sInfoThousands":
+                                ",",
+                            "oPaginate":
+                                {
+                                    "sFirst":
+                                        "首页",
+                                    "sPrevious":
+                                        "上页",
+                                    "sNext":
+                                        "下页",
+                                    "sLast":
+                                        "末页"
+                                }
+                            ,
+                            "oAria":
+                                {
+                                    "sSortAscending":
+                                        ": 以升序排列此列",
+                                    "sSortDescending":
+                                        ": 以降序排列此列"
+                                }
+                        },
 
 
-                    });
+                });
+            });
 
-                }
-            );
         });
 
     </script>

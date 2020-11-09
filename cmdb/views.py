@@ -6,6 +6,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.core import serializers
 
 from .models import ServerAsset
+from django.contrib.auth.models import User
 
 # Create your views here.
 @login_required(login_url="/admin/login/")
@@ -29,6 +30,8 @@ def page(request):
     result_json = json.loads(tmp_data)  # 对序列化之后的str类型数据进行转化为json对象
     tmp = list()
     for item in result_json:
+        item['fields']['updator'] = str(User.objects.get(id=item['fields']['updator']))
+        item['fields']['creator'] = str(User.objects.get(id=item['fields']['creator']))
         tmp.append(item['fields'])  # 提取 'fields'字段的内容
     return HttpResponse(json.dumps({"data": tmp}))
 

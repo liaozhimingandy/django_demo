@@ -11,11 +11,17 @@ class ServerAsset(models.Model):
         (3, '故障'),
         (4, '备用'),
     )
+    os_type = (
+        ('W', 'Windows'),
+        ('A', 'Apple'),
+        ('L', 'Linux')
+    )
     """服务器"""
     id = models.BigAutoField(primary_key=True, help_text="主键id")                                     #主键
     sn = models.CharField(max_length=128, unique=True, verbose_name="序列号", help_text="序列号")         # 不可重复
     name = models.CharField(max_length=64, unique=True, verbose_name="服务器名称", help_text="服务器名称")   # 不可重复
-    os_name = models.CharField(max_length=128, verbose_name="操作系统名称", null=True, help_text="操作系统名称")
+    # os_name = models.CharField(max_length=128, verbose_name="操作系统名称", null=True, help_text="操作系统名称")
+    os_type = models.CharField(choices=os_type, default='W', max_length=2,blank=True, null=True, help_text="操作系统名称")
     status = models.SmallIntegerField(choices=asset_status, default=0, verbose_name='设备状态')
     manage_ip = models.GenericIPAddressField(null=True, blank=True, verbose_name='管理IP')
     memo = models.TextField(null=True, blank=True, verbose_name='备注')
@@ -33,5 +39,5 @@ class ServerAsset(models.Model):
     class Meta:
         verbose_name = '资产总表'
         verbose_name_plural = "资产总表"
-        # ordering = ('update_time', )
+        ordering = ('update_time', )
         # db_table = 'cmdb_server_asset'
