@@ -1,13 +1,13 @@
 {% extends 'cmdb/base.html' %}
 {#标题#}
-{% block page_title %} 服务器清单{% endblock %}
+{% block page_title %}数据库清单{% endblock %}
 
 {#内容导航条部分#}
 {% block content_header %}
-    服务器清单
+    数据库清单
 {% endblock %}
 {% block content_header_2 %}
-    服务器清单
+    数据库清单
 {% endblock %}
 
 <!--内容区域-->
@@ -22,21 +22,21 @@
                     <table id="example1" class="table table-bordered table-hover">
                         <thead>
                         <tr>
-                            <th>序列号</th>
-                            <th>服务器名称</th>
-                            <th>操作系统名称</th>
+                            <th>序号</th>
+                            <th>数据库名称</th>
+                            <th>数据库版本</th>
                             <th>管理IP</th>
-                            <th>记录时间</th>
-                            <th>记录者</th>
+                            <th>数据库端口号</th>
+                            <th>数据库用户名</th>
+                            <th>数据库密码</th>
                             <th>更新者</th>
                             <th>更新日期</th>
                             <th>备注</th>
-                            <th>删除标记</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr>
-                            <td>Trident</td>
+                            <td></td>
                             <td>Internet Explorer 4.0</td>
                             <td>Win 95+</td>
                             <td> 4</td>
@@ -82,27 +82,31 @@
                     "pagingType": "full_numbers",
                     // 增加或修改通过 Ajax 提交到服务端的请求数据
                     "ajax": {
-                        "url": "/cmdb/page",
+                        "dataType": 'json',
+                        "url": "/cmdb/data_database",
                         "type": "POST",
                         "dataSrc": 'data'
                     },
-                      // 给datatable自动编号
+                    // 给datatable自动编号
                     "fnDrawCallback": function () {
                         this.api().column(0).nodes().each(function (cell, i) {
                             cell.innerHTML = i + 1;
                         });
                     },
+                    //使表格第四列不显示不可搜索不可排序
+                    columnDefs: [{'targets': [9], 'visiblie': true, 'searchable': false, 'sortable': false}],
+
                     // 设置列的数据源
                     "columns": [
                         {"data": null},
-                        {"data": "name"},
+                        {"data": "db_type"},
                         {
-                            "data": 'os_type',
+                            "data": 'db_type',
                             "render": function (data, type, row, meta) {
                                 //这个效果是超过的 隐藏，类似效果自己扩展吧
-                                if (data == 'W') {
+                                if (data === 'MSSQL') {
                                     return '<i class="fas fa-th-large"></i>'
-                                } else if (data == 'A') {
+                                } else if (data === '2008') {
                                     return '<i class="fa fa-apple-alt" aria-hidden="true"></i>'
                                 } else {
                                     return '未知'
@@ -114,34 +118,27 @@
                             "data": "manage_ip"
                         },
                         {
-                            "data": "create_time",
+                            "data": "port",
                             "render": function (data, type, row, meta) {
                                 //这个效果是超过的 隐藏，类似效果自己扩展吧
                                 return "<div style='width:150px;text-align:left;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;'" + "title='" + data + "'>" + data + "</div>";
                             }
                         },
 
-                        {"data": "creator"},
-                        {"data": "updator"},
+                        {"data": "username"},
+                        {"data": "password"},
                         {
-                            "data": 'update_time',
+                            "data": 'updator'
+                        },
+                        {
+                            "data": "update_time",
                             "render": function (data, type, row, meta) {
-                                //这个效果是超过的 隐藏，类似效果自己扩展吧white-space: nowrap;为不换行多的用...代替
+                                //这个效果是超过的 隐藏，类似效果自己扩展吧
                                 return "<div style='width:150px;text-align:left;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;'" + "title='" + data + "'>" + data + "</div>";
                             }
                         },
                         {
                             "data": "memo"
-                        },
-                        {
-                            "data": "flag_delted",
-                            "render": function (obj) {
-                                if (obj == false) {
-                                    return "<span class='text-success'>正常</span>"
-                                } else {
-                                    return "<span class='text-danger'>已删除</span>"
-                                }
-                            }
                         }
                     ],
                     // 国际化

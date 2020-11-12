@@ -56,6 +56,8 @@ urlpatterns = [
     path(r'', views.overview, name='index'),
     path(r'base', views.base, name='base'),
     path(r'page', views.page, name='page'),
+    path(r'list_database', views.list_database, name='list_database'),
+    path(r'data_database', views.data_database, name='data_database'),
     # path(r'login', views.login, name='login')
     # url(r"^login/$", 'django.contrib.auth.views.login', {'template_name':'authorization/login.html'}, name ='login'),
 

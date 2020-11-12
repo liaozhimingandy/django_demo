@@ -14,9 +14,9 @@
     <link rel="stylesheet" href="{% static 'cmdb/plugins/overlayScrollbars/css/OverlayScrollbars.min.css' %}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{% static 'cmdb/dist/css/adminlte.min.css' %}">
-   <!-- DataTables -->
-  <link rel="stylesheet" href="{% static 'cmdb/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css' %}">
-  <link rel="stylesheet" href="{% static 'cmdb/plugins/datatables-responsive/css/responsive.bootstrap4.min.css' %}">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="{% static 'cmdb/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css' %}">
+    <link rel="stylesheet" href="{% static 'cmdb/plugins/datatables-responsive/css/responsive.bootstrap4.min.css' %}">
     <!-- Google Font: Source Sans Pro -->
     {#  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">#}
 
@@ -114,8 +114,8 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="{% url 'index' %}" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
+                                <a href="{% url 'index' %}" class="nav-link active">
+                                    <i class="fa fa-bell nav-icon"></i>
                                     <p>仪表盘</p>
                                 </a>
                             </li>
@@ -132,23 +132,56 @@
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
                                 <a href="{% url 'index' %}" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
+                                    <i class="fa fa-server nav-icon"></i>
                                     <p>服务器清单</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{% url 'index' %}" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
+                                <a href="{% url 'list_database' %}" class="nav-link">
+                                    <i class="fa fa-database nav-icon"></i>
                                     <p>数据库清单</p>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a href="{% url 'index' %}" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
+                                    <i class="fa fa-code nav-icon"></i>
                                     <p>其它应用清单</p>
                                 </a>
                             </li>
-
+                        </ul>
+                    </li>
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fa fa-cog"></i>
+                            <p>
+                                设置
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{% url 'index' %}" class="nav-link">
+                                    <i class="fa fa-cogs nav-icon"></i>
+                                    <p>配置</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fa fa-database"></i>
+                            <p>
+                                操作日志
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="/admin/" class="nav-link" target="_blank">
+                                    <i class="nav-icon fa fa-server"></i>
+                                    <p>相关日志</p>
+                                </a>
+                            </li>
                         </ul>
                     </li>
 
@@ -174,7 +207,7 @@
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">首页</a></li>
+                            <li class="breadcrumb-item"><a href="/">首页</a></li>
                             <li class="breadcrumb-item active">
                                 {% block content_header_2 %}
                                     <h1>标题</h1>
